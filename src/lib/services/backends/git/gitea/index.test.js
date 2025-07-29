@@ -26,7 +26,6 @@ vi.mock('$lib/services/backends/git/gitea/constants', () => ({
   BACKEND_NAME: 'gitea',
   DEFAULT_API_ROOT: 'https://gitea.com',
   DEFAULT_AUTH_PATH: 'login/oauth/authorize',
-  DEFAULT_AUTH_ROOT: 'https://gitea.com',
 }));
 
 vi.mock('$lib/services/backends/git/gitea/files', () => ({

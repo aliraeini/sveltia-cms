@@ -8,7 +8,6 @@ import {
   BACKEND_NAME,
   DEFAULT_API_ROOT,
   DEFAULT_AUTH_PATH,
-  DEFAULT_AUTH_ROOT,
 } from '$lib/services/backends/git/gitea/constants';
 import { fetchBlob, fetchFiles } from '$lib/services/backends/git/gitea/files';
 import { getBaseURLs, repository } from '$lib/services/backends/git/gitea/repository';
@@ -35,17 +34,18 @@ export const init = () => {
   const {
     repo: projectPath,
     branch,
-    base_url: authRoot = DEFAULT_AUTH_ROOT,
+    base_url = null,
     auth_endpoint: authPath = DEFAULT_AUTH_PATH,
     app_id: clientId = '',
     api_root: restApiRoot = DEFAULT_API_ROOT,
   } = backend;
 
-  const authURL = `${stripSlashes(authRoot)}/${stripSlashes(authPath)}`;
+  const baseRoot = base_url || new URL(restApiRoot).origin
+  const authURL = `${stripSlashes(baseRoot)}/${stripSlashes(authPath)}`;
   // Developers may misconfigure custom API roots, so we use the origin to redefine them
-  const restApiOrigin = new URL(restApiRoot).origin;
+  const restApiURL =  (baseRoot == restApiRoot) ? `${baseRoot}/api/v1` : restApiRoot;
   const [owner, repo] = /** @type {string} */ (projectPath).split('/');
-  const baseURL = `${restApiOrigin}/${owner}/${repo}`;
+  const baseURL = `${baseRoot}/${owner}/${repo}`;
 
   Object.assign(
     repository,
@@ -68,8 +68,8 @@ export const init = () => {
       clientId,
       authURL,
       tokenURL: authURL.replace('/authorize', '/access_token'),
-      origin: restApiOrigin,
-      restBaseURL: `${restApiOrigin}/api/v1`,
+      origin: baseRoot,
+      restBaseURL: restApiURL,
     }),
   );
 

@@ -5,7 +5,6 @@ import {
   BACKEND_NAME,
   DEFAULT_API_ROOT,
   DEFAULT_AUTH_PATH,
-  DEFAULT_AUTH_ROOT,
   MIN_FORGEJO_VERSION,
   MIN_GITEA_VERSION,
 } from '$lib/services/backends/git/gitea/constants';
@@ -21,10 +20,6 @@ describe('Gitea constants', () => {
 
   test('exports correct default API root', () => {
     expect(DEFAULT_API_ROOT).toBe('https://gitea.com/api/v1');
-  });
-
-  test('exports correct default auth root', () => {
-    expect(DEFAULT_AUTH_ROOT).toBe('https://gitea.com');
   });
 
   test('exports correct default auth path', () => {

@@ -2,7 +2,6 @@ export const BACKEND_NAME = 'gitea';
 export const BACKEND_LABEL = 'Gitea / Forgejo';
 
 export const DEFAULT_API_ROOT = 'https://gitea.com/api/v1';
-export const DEFAULT_AUTH_ROOT = 'https://gitea.com';
 export const DEFAULT_AUTH_PATH = 'login/oauth/authorize';
 
 /**
